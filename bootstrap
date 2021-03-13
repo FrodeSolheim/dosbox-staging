@@ -18,6 +18,12 @@ rm -Rf dosbox-staging-0.76.0 dosbox-staging-src
 tar xf ../_sources/v0.76.0.tar.gz
 mv dosbox-staging-0.76.0 dosbox-staging-src
 
+echo "Applying patches..."
+
+cd dosbox-staging-src
+patch -p1 < ../../../825f66ab24d2991a532d1b3c002854799d75ea3f.patch
+cd ..
+
 echo "Running autogen.sh..."
 cd dosbox-staging-src
 ./autogen.sh
