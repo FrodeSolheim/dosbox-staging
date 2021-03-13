@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+# FIXME: Clean? distclean?
+rm -f dosbox-staging*
+rm -Rf fsbuild/_build
+
+echo "Downloading dosbox-staging-0.76.0.tar.gz..."
+URL=https://github.com/dosbox-staging/dosbox-staging/archive/v0.76.0.tar.gz
+SHA256=7df53c22f7ce78c70afb60b26b06742b90193b56c510219979bf12e0bb2dc6c7
+python3 fsbuild/download.py "$URL" sha256:$SHA256
+
+echo "Extracting dosbox-staging-0.76.0.tar.gz..."
+mkdir -p fsbuild/_build
+cd fsbuild/_build
+rm -Rf dosbox-staging-0.76.0 dosbox-staging-src
+tar xf ../_sources/v0.76.0.tar.gz
+mv dosbox-staging-0.76.0 dosbox-staging-src
+
+echo "Running autogen.sh..."
+cd dosbox-staging-src
+./autogen.sh
+
+echo "Bootstrap done"

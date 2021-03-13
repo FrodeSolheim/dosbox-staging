@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+. fsbuild/system.sh
+
+# FIXME: Re-enable support for fluidsynth
+
+cd fsbuild/_build/dosbox-staging-src
+if [ $SYSTEM_OS = "Linux" ]; then
+CXX="g++ -no-pie" ./configure \
+	--prefix=/dev/null \
+	--disable-fluidsynth \
+	--disable-opus-cdda
+elif [ $SYSTEM_OS = "Windows" ];then
+CXXFLAGS="-g -O2 -fpermissive" ./configure \
+	--prefix=/dev/null \
+	--disable-fluidsynth \
+	--disable-opus-cdda
+else
+./configure \
+	--prefix=/dev/null \
+	--disable-fluidsynth \
+	--disable-opus-cdda
+fi
