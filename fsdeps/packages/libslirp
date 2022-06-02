@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+
+PACKAGE=libslirp-4.7.0
+URL=https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v4.7.0/libslirp-v4.7.0.tar.gz
+SHA256=9398f0ec5a581d4e1cd6856b88ae83927e458d643788c3391a39e61b75db3d3b
+REVISION=0
+
+. fsdeps/dep.sh
+
+python3 fsdeps/download.py "$URL" sha256:$SHA256
+
+rm -Rf fsdeps/_build && mkdir fsdeps/_build && cd fsdeps/_build
+tar xf ../_sources/libslirp-v4.7.0.tar.gz
+cd libslirp-v4.7.0
+
+meson \
+--prefix $PREFIX \
+--libdir lib \
+_build
+ninja -C _build
+ninja -C _build install
+
+touch $INSTALLED
