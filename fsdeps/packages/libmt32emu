@@ -6,7 +6,7 @@ set -e
 PACKAGE=libmt32emu-2.6.3
 URL=https://github.com/munt/munt/archive/refs/tags/libmt32emu_2_6_3.tar.gz
 SHA256=a24ee0a8ae9aa4138ffb185f123768b23fbb8b5b3bebb07882f3ba2836ed4905
-REVISION=0
+REVISION=1
 
 . fsdeps/dep.sh
 
@@ -19,5 +19,8 @@ cd munt-libmt32emu_2_6_3/mt32emu
 cmake -DCMAKE_INSTALL_PREFIX=$PREFIX .
 make
 make install
+if [ "$SYSTEM_OS" = "macOS" ]; then
+install_name_tool -id $PREFIX/lib/libmt32emu.2.dylib $PREFIX/lib/libmt32emu.dylib
+fi
 
 touch $INSTALLED

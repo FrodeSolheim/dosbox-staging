@@ -6,7 +6,7 @@ fsdeps/packages/glib
 PACKAGE=libfluidsynth-2.2.7
 URL=https://github.com/FluidSynth/fluidsynth/archive/refs/tags/v2.2.7.tar.gz
 SHA256=460d86d8d687f567dc4780890b72538c7ff6b2082080ef2f9359d41670a309cf
-REVISION=1
+REVISION=4
 
 . fsdeps/dep.sh
 
@@ -16,7 +16,24 @@ rm -Rf fsdeps/_build && mkdir fsdeps/_build && cd fsdeps/_build
 tar x --exclude=sf2 -f ../_sources/v2.2.7.tar.gz
 cd fluidsynth-2.2.7
 
-cmake -DCMAKE_INSTALL_PREFIX=$PREFIX .
+if [ "$SYSTEM_OS" = "Windows" ]; then
+cmake \
+-G "MSYS Makefiles" \
+-DCMAKE_INSTALL_PREFIX=$PREFIX \
+-Denable-libsndfile=off \
+.
+elif [ "$SYSTEM_OS" = "macOS" ]; then
+cmake \
+-DCMAKE_INSTALL_PREFIX=$PREFIX \
+-Denable-framework=off \
+-Denable-libsndfile=off \
+.
+else
+cmake \
+-DCMAKE_INSTALL_PREFIX=$PREFIX \
+-Denable-libsndfile=off \
+.
+fi
 make
 make install
 
