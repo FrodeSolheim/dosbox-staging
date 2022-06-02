@@ -19,12 +19,12 @@ cd munt-libmt32emu_2_6_3/mt32emu
 if [ "$SYSTEM_OS" = "Windows" ]; then
 cmake \
 -G "MSYS Makefiles" \
--DCMAKE_INSTALL_PREFIX=$PREFIX
+-DCMAKE_INSTALL_PREFIX=$PREFIX \
 .
 else
 cmake \
-	-DCMAKE_INSTALL_PREFIX=$PREFIX \
-	.
+-DCMAKE_INSTALL_PREFIX=$PREFIX \
+.
 fi
 make
 make install
