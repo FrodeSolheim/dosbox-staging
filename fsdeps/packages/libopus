@@ -4,7 +4,7 @@ set -e
 PACKAGE=libopus-1.3.1
 URL=https://archive.mozilla.org/pub/opus/opus-1.3.1.tar.gz
 SHA256=65b58e1e25b2a114157014736a3d9dfeaad8d41be1c8179866f144a2fb44ff9d
-REVISION=0
+REVISION=1
 
 . fsdeps/dep.sh
 
@@ -13,6 +13,14 @@ python3 fsdeps/download.py "$URL" sha256:$SHA256
 rm -Rf fsdeps/_build && mkdir fsdeps/_build && cd fsdeps/_build
 tar xf ../_sources/opus-1.3.1.tar.gz
 cd opus-1.3.1
+
+if [ $SYSTEM_OS = "Windows" ]; then
+python3 ../../replace.py \
+configure.ac \
+"AX_ADD_FORTIFY_SOURCE" \
+""
+autoreconf
+fi
 
 ./configure --prefix=$PREFIX
 make
