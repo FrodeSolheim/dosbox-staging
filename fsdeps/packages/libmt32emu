@@ -16,7 +16,16 @@ rm -Rf fsdeps/_build && mkdir fsdeps/_build && cd fsdeps/_build
 tar xf ../_sources/libmt32emu_2_6_3.tar.gz
 cd munt-libmt32emu_2_6_3/mt32emu
 
-cmake -DCMAKE_INSTALL_PREFIX=$PREFIX .
+if [ "$SYSTEM_OS" = "Windows" ]; then
+cmake \
+-G "MSYS Makefiles" \
+-DCMAKE_INSTALL_PREFIX=$PREFIX
+.
+else
+cmake \
+	-DCMAKE_INSTALL_PREFIX=$PREFIX \
+	.
+fi
 make
 make install
 if [ "$SYSTEM_OS" = "macOS" ]; then
