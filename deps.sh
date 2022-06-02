@@ -2,6 +2,10 @@
 
 set -e
 
-fsdeps/dep/libpng
-fsdeps/dep/SDL2
-fsdeps/dep/zlib
+fsdeps/packages/libfluidsynth
+fsdeps/packages/libmt32emu
+fsdeps/packages/libopusfile
+fsdeps/packages/libpng
+fsdeps/packages/SDL2
+fsdeps/packages/SDL2_net
+fsdeps/packages/zlib

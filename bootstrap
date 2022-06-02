@@ -2,30 +2,20 @@
 
 set -e
 
-# FIXME: Clean? distclean?
+echo "Removing old files..."
 rm -f dosbox-staging*
 rm -Rf fsbuild/_build
 
-echo "Downloading dosbox-staging-0.76.0.tar.gz..."
-URL=https://github.com/dosbox-staging/dosbox-staging/archive/v0.76.0.tar.gz
-SHA256=7df53c22f7ce78c70afb60b26b06742b90193b56c510219979bf12e0bb2dc6c7
+echo "Downloading dosbox-staging-0.78.1.tar.gz..."
+URL=https://github.com/dosbox-staging/dosbox-staging/archive/refs/tags/v0.78.1.tar.gz
+SHA256=dcd93ce27f5f3f31e7022288f7cbbc1f1f6eb7cc7150c2c085eeff8ba76c3690
 python3 fsbuild/download.py "$URL" sha256:$SHA256
 
-echo "Extracting dosbox-staging-0.76.0.tar.gz..."
+echo "Extracting dosbox-staging-0.78.1.tar.gz..."
 mkdir -p fsbuild/_build
 cd fsbuild/_build
-rm -Rf dosbox-staging-0.76.0 dosbox-staging-src
-tar xf ../_sources/v0.76.0.tar.gz
-mv dosbox-staging-0.76.0 dosbox-staging-src
-
-echo "Applying patches..."
-
-cd dosbox-staging-src
-patch -p1 < ../../../825f66ab24d2991a532d1b3c002854799d75ea3f.patch
-cd ..
-
-echo "Running autogen.sh..."
-cd dosbox-staging-src
-./autogen.sh
+rm -Rf dosbox-staging-0.78.1 dosbox-staging-src
+tar xf ../_sources/v0.78.1.tar.gz
+mv dosbox-staging-0.78.1 dosbox-staging-src
 
 echo "Bootstrap done"

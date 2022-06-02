@@ -10,12 +10,12 @@ srcdir = fsbuild/_build/dosbox-staging-src
 all: build dosbox-staging${exe}
 
 build:
-	make -C ${srcdir}
+	cd ${srcdir} && ninja -C build
 
-dosbox-staging${exe}: ${srcdir}/src/dosbox${exe}
-	cp ${srcdir}/src/dosbox${exe} dosbox-staging${exe}
+dosbox-staging${exe}: ${srcdir}/build/dosbox${exe}
+	cp ${srcdir}/build/dosbox${exe} dosbox-staging${exe}
 
 clean:
 	if [ -d ${srcdir} ]; then \
-		make -C ${srcdir} clean; fi
+		cd ${srcdir} && ninja -C build clean; fi
 	rm -f dosbox-staging${exe}
